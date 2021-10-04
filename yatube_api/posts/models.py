@@ -71,7 +71,7 @@ class Follow(models.Model):
     following = models.ForeignKey(
         User,
         related_name='following',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -83,11 +83,11 @@ class Follow(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'following'],
-                name='unique_follow'
+                name='unique_follow',
             ),
             models.CheckConstraint(
                 check=~Q(user=F('following')),
-                name='self_following'
+                name='self_following',
             )
         ]
         ordering = ('user', 'following')

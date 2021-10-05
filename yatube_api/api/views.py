@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters, mixins, permissions, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 
-from posts.models import Comment, Group, Post, User  # isort:skip
-from .permissions import AuthorOrReadOnly
+from posts.models import Comment, Group, Post  # isort:skip
+from .permissions import AuthorOrReadOnly  # isort:skip
 from .serializers import CommentSerializer, GroupSerializer  # isort:skip
 from .serializers import FollowSerializer, PostSerializer  # isort:skip
 
@@ -29,7 +29,11 @@ class PostViewSet(viewsets.ModelViewSet):
         super(PostViewSet, self).perform_destroy(instance)
 
 
-class GroupViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class GroupViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet
+):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
@@ -57,7 +61,11 @@ class CommentViewSet(viewsets.ModelViewSet):
         super(CommentViewSet, self).perform_destroy(instance)
 
 
-class FollowViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
+class FollowViewSet(
+    viewsets.GenericViewSet,
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin
+):
     serializer_class = FollowSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ('following__username',)

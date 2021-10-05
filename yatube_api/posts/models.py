@@ -21,11 +21,19 @@ class Group(models.Model):
 
 class Post(models.Model):
     text = models.TextField('Текст')
-    pub_date = models.DateTimeField('Дата публикации', auto_now_add=True, db_index=True)
+    pub_date = models.DateTimeField(
+        'Дата публикации',
+        auto_now_add=True,
+        db_index=True
+    )
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts')
+        User, on_delete=models.CASCADE,
+        related_name='posts'
+    )
     image = models.ImageField(
-        upload_to='posts/', null=True, blank=True)
+        upload_to='posts/',
+        null=True, blank=True
+    )
     group = models.ForeignKey(
         Group,
         on_delete=models.SET_NULL,
@@ -45,12 +53,26 @@ class Post(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='comments', verbose_name='Автор')
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Автор'
+    )
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name='comments', verbose_name='Пост')
-    text = models.TextField(max_length=500, verbose_name='Текст комментария')
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Пост'
+    )
+    text = models.TextField(
+        max_length=500,
+        verbose_name='Текст комментария'
+    )
     created = models.DateTimeField(
-        'Дата добавления', auto_now_add=True, db_index=True)
+        'Дата добавления',
+        auto_now_add=True,
+        db_index=True
+    )
 
     class Meta:
         verbose_name = 'Комментарии'

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-
-from posts.models import Comment, Follow, Group, Post, User
+from posts.models import Comment, Follow, Group, Post, User  # isort:skip
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -58,6 +57,7 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def validate_following(self, value):
         if value == self.context['request'].user:
-            raise serializers.ValidationError('Попытка подписаться на самого себя')
+            raise serializers.ValidationError(
+                'Попытка подписаться на самого себя'
+            )
         return value
-
